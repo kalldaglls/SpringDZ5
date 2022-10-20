@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <!-- скрипт Angular JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <!-- указываем на файл с js-кодом-->
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+<!--container, table table-hover, btn btn-primary - это классы элементов/стили, который взяты из bootsrap!-->
+<div class="container" ng-controller="indexController"> <!--этим div управляет контроллер indexController!-->
+    <h3>Список продуктов</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>Действие</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductList | limitTo:2">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+<!--            ng-click - это как листенер кнопки!-->
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
+            </td>
+        </tr>
+        <tr>
+            <button type="submit" class="btn btn-primary" ng-click="loadProducts()">Следующая страница</button>
+        </tr>
+        </tbody>
+    </table>
+
+    <p></p>
+    <h3>Добавить продукт через JSON</h3>
+    <form novalidate ng-submit="createProductJson()">
+        <input class="form-control" type="text" placeholder="Title" ng-model="newProductJson.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Price" ng-model="newProductJson.price">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить JSON продукта</button>
+    </form>
+    <p></p>
+</div>
+
+
+
+</body>
+</html>
+
