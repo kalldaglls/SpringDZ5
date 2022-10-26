@@ -19,38 +19,67 @@
 
 <!--container, table table-hover, btn btn-primary - это классы элементов/стили, который взяты из bootsrap!-->
 <div class="container" ng-controller="indexController"> <!--этим div управляет контроллер indexController!-->
+    <form novalidate ng-submit="loadProducts()">
+        <div class="form-floating input-group-sm">
+            <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
+            <label for="filterTitle">Название</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="number" class="form-control" id="filterMinPrice" placeholder="" ng-model="filter.min_price">
+            <label for="filterMinPrice">Мин. цена</label>
+        </div>
+        <p></p>
+        <div class="form-floating input-group-sm">
+            <input type="number" class="form-control" id="filterMaxPrice" placeholder="" ng-model="filter.max_price">
+            <label for="filterMaxPrice">Макс. цена</label>
+        </div>
+        <p></p>
+<!--        <div class="form-floating input-group-sm">-->
+<!--            <input type="text" class="form-control" id="filterSecretKey" placeholder="" ng-model="filter.secret_key_part">-->
+<!--            <label for="filterSecretKey">Анонимус</label>-->
+<!--        </div>-->
+<!--        <p></p>-->
+        <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
+    </form>
     <h3>Список продуктов</h3>
     <table class="table table-hover">
         <tr>
             <td>ID</td>
             <td>Title</td>
             <td>Price</td>
+<!--            <td>Anon</td>-->
             <td>Действие</td>
         </tr>
         <tbody>
-        <tr ng-repeat="p in ProductList | limitTo:2">
+<!--        <label>Список Танков:</label><br />-->
+<!--        <input ng-model="p" placeholder="Фильтр по цене..." />-->
+        <tr ng-repeat="p in ProductList">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+<!--            <td>{{p.secretKey}}</td>-->
 <!--            ng-click - это как листенер кнопки!-->
             <td>
                 <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
             </td>
         </tr>
-        <tr>
-            <button type="submit" class="btn btn-primary" ng-click="loadProducts()">Следующая страница</button>
-        </tr>
+<!--        <tr>-->
+<!--            <button type="submit" class="btn btn-primary" ng-click="loadProducts()">Следующая страница</button>-->
+<!--        </tr>-->
         </tbody>
     </table>
 
     <p></p>
-    <h3>Добавить продукт через JSON</h3>
+    <h3>Добавить продукт</h3>
     <form novalidate ng-submit="createProductJson()">
         <input class="form-control" type="text" placeholder="Title" ng-model="newProductJson.title">
         <p></p>
         <input class="form-control" type="number" placeholder="Price" ng-model="newProductJson.price">
         <p></p>
-        <button type="submit" class="btn btn-primary">Сохранить JSON продукта</button>
+        <input class="form-control" type="text" placeholder="Secret Key" ng-model="newProductJson.secretKey">
+        <p></p>
+        <button type="submit" class="btn btn-primary">Сохранить продукт</button>
     </form>
     <p></p>
 </div>

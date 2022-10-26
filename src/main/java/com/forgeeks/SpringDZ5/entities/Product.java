@@ -14,6 +14,9 @@ public class Product {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "secret_key")
+    private String secretKey;
+
     public Product() {
     }
 
@@ -41,12 +44,21 @@ public class Product {
         this.price = price;
     }
 
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
+                "id=" + id +
                 ", price=" + price +
+                ", title='" + title + '\'' +
+                ", secretKey='" + secretKey + '\'' +
                 '}';
     }
 }
