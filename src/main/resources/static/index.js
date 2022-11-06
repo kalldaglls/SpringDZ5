@@ -1,5 +1,12 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
     const contextPath = 'http://localhost:8080/app/api/v1';
+    $scope.loadCart = function (){
+        $http.get(contextPath + '/products')
+            .then(function (response) {
+                console.log(response.data);
+                $scope.ProductList = response.data;
+            });
+    }
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
             url: contextPath + '/products',
@@ -11,7 +18,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 // secret_key_part: $scope.filter ? $scope.filter.secret_key_part : null
             }
         }).then(function (response) {
-            $scope.ProductList = response.data.content;
+            $scope.ProductPage = response.data;
         });
     };
     $scope.deleteProduct = function (productId) {
@@ -29,5 +36,13 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
     }
 
+    $scope.putProductInCart = function (productId) {
+        $http.get(contextPath + '/products/' + productId)
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
+
     $scope.loadProducts();
+    // $scope.loadCart();
 });

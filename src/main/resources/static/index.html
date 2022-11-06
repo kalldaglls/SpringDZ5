@@ -48,21 +48,27 @@
             <td>ID</td>
             <td>Title</td>
             <td>Price</td>
-<!--            <td>Anon</td>-->
-            <td>Действие</td>
+            <td>SecretKey</td>
         </tr>
         <tbody>
 <!--        <label>Список Танков:</label><br />-->
 <!--        <input ng-model="p" placeholder="Фильтр по цене..." />-->
-        <tr ng-repeat="p in ProductList">
+        <tr ng-repeat="p in ProductPage.content">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-<!--            <td>{{p.secretKey}}</td>-->
+            <td>{{p.secretKey}}</td>
 <!--            ng-click - это как листенер кнопки!-->
             <td>
                 <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
             </td>
+            <td>
+                <button class="btn btn-danger" ng-click="putProductInCart(p.id)">Сохранить продукт в корзину</button>
+            </td>
+<!--            ng-repeat="p in ProductList-->
+<!--            <td>-->
+<!--                <button type="submit" class="btn btn-primary">Сохранить продукт в корзину</button>-->
+<!--            </td>-->
         </tr>
 <!--        <tr>-->
 <!--            <button type="submit" class="btn btn-primary" ng-click="loadProducts()">Следующая страница</button>-->
@@ -71,6 +77,27 @@
     </table>
 
     <p></p>
+<!--        <button type="submit" class="btn btn-primary">Сохранить продукт в корзину</button>-->
+    <form>
+    <h3>Корзина</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Price</td>
+            <td>SecretKey</td>
+        </tr>
+        <tr ng-repeat="p in ProductList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>{{p.secretKey}}</td>
+    </table>
+    </form>
+    <p></p>
+
+    <p></p>
+
     <h3>Добавить продукт</h3>
     <form novalidate ng-submit="createProductJson()">
         <input class="form-control" type="text" placeholder="Title" ng-model="newProductJson.title">
