@@ -99,12 +99,12 @@
     <p></p>
 
     <h3>Добавить продукт</h3>
-    <form novalidate ng-submit="createProductJson()">
-        <input class="form-control" type="text" placeholder="Title" ng-model="newProductJson.title">
+    <form novalidate ng-submit="saveNewProduct()">
+        <input class="form-control" type="text" placeholder="Title" ng-model="saveNewProduct.title">
         <p></p>
-        <input class="form-control" type="number" placeholder="Price" ng-model="newProductJson.price">
+        <input class="form-control" type="number" placeholder="Price" ng-model="saveNewProduct.price">
         <p></p>
-        <input class="form-control" type="text" placeholder="Secret Key" ng-model="newProductJson.secretKey">
+        <input class="form-control" type="text" placeholder="Secret Key" ng-model="saveNewProduct.secretKey">
         <p></p>
         <button type="submit" class="btn btn-primary">Сохранить продукт</button>
     </form>

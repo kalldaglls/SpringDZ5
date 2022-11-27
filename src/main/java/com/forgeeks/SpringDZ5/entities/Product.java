@@ -24,13 +24,13 @@ public class Product {
     @Column(name = "secret_key")
     private String secretKey;
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", price=" + price +
-                ", title='" + title + '\'' +
-                ", secretKey='" + secretKey + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Product{" +
+//                "id=" + id +
+//                ", price=" + price +
+//                ", title='" + title + '\'' +
+//                ", secretKey='" + secretKey + '\'' +
+//                '}';
+//    }
 }

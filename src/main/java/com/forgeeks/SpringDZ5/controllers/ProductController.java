@@ -108,8 +108,10 @@ public Page<ProductDto> getAllProducts(
 //        product.setPrice(productDto.getPrice());
 //        productService.save(product);
 //        return productDto;
+        System.out.println(productDto);
         productValidator.validate(productDto);
-        Product product = productConverter.dtoToEntity(productDto);
+        Product product = new Product();
+        productConverter.dtoToEntity(productDto);
         product = productService.save(product);
         return productConverter.entityToDto(product);
     }

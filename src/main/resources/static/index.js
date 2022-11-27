@@ -28,9 +28,9 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
     }
 
-    $scope.createProductJson = function () {
-        console.log($scope.newProductJson);
-        $http.post(contextPath + '/products', $scope.newProductJson)
+    $scope.saveNewProduct = function () {
+        console.log($scope.saveNewProduct());
+        $http.post(contextPath + '/products', $scope.saveNewProduct())
             .then(function (response) {
                 $scope.loadProducts();
             });
