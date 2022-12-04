@@ -3,7 +3,7 @@ create table product (
     id         bigserial primary key,
     title      varchar(255),
     price      int,
-    secret_key varchar(255)
+    order_id   bigint references orders (id)
 );
 
 create table users (
@@ -26,6 +26,11 @@ create table users_roles (
                              user_id bigint not null references users (id),
                              role_id bigint not null references roles (id),
                              primary key (user_id, role_id)
+);
+
+create table orders (
+                        id         bigserial primary key,
+                        title      varchar(255)
 );
 
 
