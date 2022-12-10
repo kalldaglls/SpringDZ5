@@ -47,24 +47,24 @@ public class AspectApp {
 
     @Around("execution(* com.forgeeks.SpringDZ5.service.*.*(..))")
     public Object countServicesWorktime(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
-        System.out.println("start counting worktime of method: " + (MethodSignature) proceedingJoinPoint.getSignature());
+//        System.out.println("start counting worktime of method: " + (MethodSignature) proceedingJoinPoint.getSignature());
         long begin = System.currentTimeMillis();
         Object out = proceedingJoinPoint.proceed();
         long end = System.currentTimeMillis();
         long worktime = end - begin;
         worktimeData = (MethodSignature) proceedingJoinPoint.getSignature() + " worktime " + worktime;
         if (proceedingJoinPoint.getThis() instanceof CartService){
-            System.out.println("YEAP!Cart!");
+//            System.out.println("YEAP!Cart!");
             cartServTime = cartServTime + worktime;
         }
-        System.out.println(worktimeData);
-        System.out.println("end counting worktime of method: " + (MethodSignature) proceedingJoinPoint.getSignature());
+//        System.out.println(worktimeData);
+//        System.out.println("end counting worktime of method: " + (MethodSignature) proceedingJoinPoint.getSignature());
         ultimateTime = ultimateTime + worktime;
-        System.out.println(proceedingJoinPoint.getKind());
-        System.out.println(proceedingJoinPoint.getTarget());
-        System.out.println(proceedingJoinPoint.getThis());
-        System.out.println(proceedingJoinPoint.getStaticPart());
-        System.out.println(proceedingJoinPoint.getSourceLocation());
+//        System.out.println(proceedingJoinPoint.getKind());
+//        System.out.println(proceedingJoinPoint.getTarget());
+//        System.out.println(proceedingJoinPoint.getThis());
+//        System.out.println(proceedingJoinPoint.getStaticPart());
+//        System.out.println(proceedingJoinPoint.getSourceLocation());
         return out;
     }
 }

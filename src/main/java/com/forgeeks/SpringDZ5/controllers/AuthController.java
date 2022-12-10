@@ -3,6 +3,8 @@ package com.forgeeks.SpringDZ5.controllers;
 
 import com.forgeeks.SpringDZ5.dto.JwtRequest;
 import com.forgeeks.SpringDZ5.dto.JwtResponse;
+import com.forgeeks.SpringDZ5.dto.UserInfoDto;
+import com.forgeeks.SpringDZ5.entities.User;
 import com.forgeeks.SpringDZ5.exceptions.AppError;
 import com.forgeeks.SpringDZ5.service.UserService;
 import com.forgeeks.SpringDZ5.utils.JwtTokenUtil;
@@ -13,26 +15,34 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/auth")
+    @PostMapping
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Incorrect username or password"), HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(), "Incorrect username or password"), HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @GetMapping("/about")
+    public UserInfoDto getCurrentUserInfo(Principal principal){
+        User user = userService.findByUsername(principal.getName()).get();
+        return new UserInfoDto(user.getUsername() + " " +   user.getEmail());
     }
 }
