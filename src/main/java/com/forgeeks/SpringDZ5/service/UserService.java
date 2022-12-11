@@ -35,4 +35,9 @@ public class UserService implements UserDetailsService {
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
+
+//    public UserDetails findByUserId(Long id) {
+//        UserDetails user = findByUserId(id);
+//        return user;
+//    }
 }

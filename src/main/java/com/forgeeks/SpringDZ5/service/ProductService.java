@@ -1,7 +1,9 @@
 package com.forgeeks.SpringDZ5.service;
 
 import com.forgeeks.SpringDZ5.dto.ProductDto;
+import com.forgeeks.SpringDZ5.entities.Category;
 import com.forgeeks.SpringDZ5.entities.Product;
+import com.forgeeks.SpringDZ5.exceptions.ResourceNotFoundException;
 import com.forgeeks.SpringDZ5.repositories.ProductRep;
 import com.forgeeks.SpringDZ5.repositories.specifications.ProductsSpecifications;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,10 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRep productRep;
-    private final List<Optional<Product>> productList = new ArrayList<>();
+    private final CategoryService categoryService;
+//    private final List<Optional<Product>> productList = new ArrayList<>();
 
-    public Page<Product> find(Integer minPrice, Integer maxPrice, String titlePart, String secretKeyPart, Integer page){
+    public Page<Product> find(Integer minPrice, Integer maxPrice, String titlePart, Integer page){
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null){
             spec = spec.and(ProductsSpecifications.priceGreaterOrEqualsThan(minPrice));
@@ -36,9 +39,6 @@ public class ProductService {
             spec = spec.and(ProductsSpecifications.titleLike(titlePart));
         }
 
-        if (secretKeyPart != null){
-            spec = spec.and(ProductsSpecifications.secretKeyLike(secretKeyPart));
-        }
         return productRep.findAll(spec, PageRequest.of(page - 1, 10));
     }
 
@@ -50,6 +50,13 @@ public class ProductService {
         productRep.deleteById(id);
     }
 
+    public void createNewProduct(ProductDto productDto) {
+        Product product = new Product();
+        product.setTitle(productDto.getTitle());
+        product.setPrice(productDto.getPrice());
+        product.setCategory(categoryService.findByTitle(productDto.getCategoryTitle()).orElseThrow(() -> new ResourceNotFoundException("Категория с названием: " + productDto.getCategoryTitle() + " не найдена")));
+        productRep.save(product);
+    }
     public Product save(Product product) {
         return productRep.save(product);
     }
@@ -78,13 +85,15 @@ public class ProductService {
         Product product = productRep.findById(productDto.getId()).orElseThrow(() -> new RuntimeException("Невозможно обновить продукта, не надйен в базе, id: " + productDto.getId()));
         product.setPrice(productDto.getPrice());
         product.setTitle(productDto.getTitle());
-        product.setSecretKey(productDto.getSecretKey());
+        Category category = new Category();
+        category.setTitle(productDto.getCategoryTitle());
+        product.setCategory(category);
         return product;
     }
 
-    public  List<Optional<Product>> putToCartById(Long id) {
-        productList.add(productRep.findById(id));
-        System.out.println(productList);
-        return productList;
-    }
+//    public  List<Optional<Product>> putToCartById(Long id) {
+//        productList.add(productRep.findById(id));
+//        System.out.println(productList);
+//        return productList;
+//    }
 }

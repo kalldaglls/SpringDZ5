@@ -1,7 +1,12 @@
-insert into product (title, price, secret_key) values
-                                                    ('Eggs', 57, 'df345@3'),
-                                                    ('Flour', 29, 'eer3=-35'),
-                                                    ('Sugar', 41, '++340350');
+insert into categories (title) values
+                                   ('Food'),
+                                   ('Electronic');
+
+insert into product (title, price, category_id) values
+                                       ('Bread', 32.00, 1),
+                                       ('Milk', 120.00, 1),
+                                       ('Butter', 320.00, 1),
+                                       ('Cheese', 500.00, 1);
 
 insert into roles (name)
 values ('ROLE_USER'),

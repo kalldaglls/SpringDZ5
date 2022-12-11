@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "product")
@@ -17,20 +18,10 @@ public class Product {
     @Column(name = "id")
     private long id;
     @Column(name = "price")
-    private int price;
+    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
     @Column(name = "title")
     private String title;
-
-    @Column(name = "secret_key")
-    private String secretKey;
-
-//    @Override
-//    public String toString() {
-//        return "Product{" +
-//                "id=" + id +
-//                ", price=" + price +
-//                ", title='" + title + '\'' +
-//                ", secretKey='" + secretKey + '\'' +
-//                '}';
-//    }
 }
